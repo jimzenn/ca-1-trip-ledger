@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { participants, transactions } from './data.js';
 import { parseDate } from './settle.js';
+import { CurrencyProvider, CurrencyToggle } from './currency.jsx';
 import FilterBar from './components/FilterBar.jsx';
 import TransactionList from './components/TransactionList.jsx';
 import PersonDetail from './components/PersonDetail.jsx';
@@ -79,6 +80,7 @@ export default function App() {
   }, [filteredTx, sort]);
 
   return (
+    <CurrencyProvider>
     <div className="min-h-screen bg-page text-ink">
       <header className="border-b border-line">
         <div className="mx-auto max-w-3xl px-4 py-5 sm:px-6 sm:py-6">
@@ -144,12 +146,15 @@ export default function App() {
         )}
       </main>
 
-      <footer className="mx-auto max-w-3xl px-4 pb-10 sm:px-6">
+      <footer className="mx-auto max-w-3xl px-4 pb-24 sm:px-6">
         <p className="text-xs text-muted font-sans">
           Numbers come from <code>src/data.js</code>. Source of truth for what each
           person owes is the per-transaction <code>shares</code> map.
         </p>
       </footer>
+
+      <CurrencyToggle />
     </div>
+    </CurrencyProvider>
   );
 }

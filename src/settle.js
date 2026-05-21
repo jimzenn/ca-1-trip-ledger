@@ -13,12 +13,6 @@ export function iconFor(category) {
   }
 }
 
-export function formatUSD(amount) {
-  const abs = Math.abs(amount);
-  const sign = amount < 0 ? "-" : "";
-  return `${sign}$${abs.toFixed(2)}`;
-}
-
 export function parseDate(mdy) {
   const [m, d] = mdy.split("/").map(Number);
   return m * 100 + d;

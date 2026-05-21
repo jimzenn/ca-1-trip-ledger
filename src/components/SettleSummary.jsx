@@ -1,7 +1,9 @@
 import { useMemo } from 'react';
-import { computeTotals, simplifyDebts, formatUSD } from '../settle.js';
+import { computeTotals, simplifyDebts } from '../settle.js';
+import { useCurrency } from '../currency.jsx';
 
 export default function SettleSummary({ participants, transactions }) {
+  const { format } = useCurrency();
   const { paid, owed, net, transfers } = useMemo(() => {
     const { paid, owed, net } = computeTotals(transactions, participants);
     const transfers = simplifyDebts(net);
@@ -37,15 +39,15 @@ export default function SettleSummary({ participants, transactions }) {
                   <tr key={p} className="border-t border-line">
                     <td className="px-4 py-3">{p}</td>
                     <td className="px-4 py-3 text-right tabular-nums">
-                      {formatUSD(paid[p])}
+                      {format(paid[p])}
                     </td>
                     <td className="px-4 py-3 text-right tabular-nums">
-                      {formatUSD(owed[p])}
+                      {format(owed[p])}
                     </td>
                     <td
                       className={'px-4 py-3 text-right tabular-nums ' + tone}
                     >
-                      {formatUSD(n)}
+                      {format(n)}
                     </td>
                   </tr>
                 );
@@ -78,7 +80,7 @@ export default function SettleSummary({ participants, transactions }) {
                   <span className="text-muted" aria-hidden="true">💸</span>
                   <span className="text-positive">{t.to}</span>
                 </div>
-                <span className="tabular-nums">{formatUSD(t.amount)}</span>
+                <span className="tabular-nums">{format(t.amount)}</span>
               </li>
             ))}
           </ul>

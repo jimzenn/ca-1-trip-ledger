@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import { formatUSD, parseDate, iconFor } from '../settle.js';
+import { parseDate, iconFor } from '../settle.js';
+import { useCurrency } from '../currency.jsx';
 
 function SummaryCard({ label, value, tone }) {
   const toneClass =
@@ -18,6 +19,7 @@ function SummaryCard({ label, value, tone }) {
 
 export default function PersonDetail({ participants, transactions }) {
   const [person, setPerson] = useState(participants[0]);
+  const { format } = useCurrency();
 
   const { paid, owed, net, involvedTx } = useMemo(() => {
     let paid = 0;
@@ -62,9 +64,9 @@ export default function PersonDetail({ participants, transactions }) {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <SummaryCard label="💰 Paid" value={formatUSD(paid)} />
-        <SummaryCard label="📥 Owed" value={formatUSD(owed)} />
-        <SummaryCard label="⚖️ Net" value={formatUSD(net)} tone={netTone} />
+        <SummaryCard label="💰 Paid" value={format(paid)} />
+        <SummaryCard label="📥 Owed" value={format(owed)} />
+        <SummaryCard label="⚖️ Net" value={format(net)} tone={netTone} />
       </div>
       <p className="font-sans text-xs text-muted -mt-2">{netHint}</p>
 
@@ -108,7 +110,7 @@ export default function PersonDetail({ participants, transactions }) {
                                   : 'text-ink'
                               }
                             >
-                              {formatUSD(share)}
+                              {format(share)}
                             </span>
                           ) : (
                             <span className="text-muted text-sm font-sans">
@@ -123,11 +125,11 @@ export default function PersonDetail({ participants, transactions }) {
                             <span className="text-accent">paid in full</span>
                             {' · '}total{' '}
                             <span className="tabular-nums">
-                              {formatUSD(tx.total)}
+                              {format(tx.total)}
                             </span>
                           </>
                         ) : (
-                          <>share of {formatUSD(tx.total)} (paid by {tx.payer})</>
+                          <>share of {format(tx.total)} (paid by {tx.payer})</>
                         )}
                       </p>
                     </div>

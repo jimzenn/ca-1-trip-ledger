@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { formatUSD, iconFor } from '../settle.js';
+import { iconFor } from '../settle.js';
+import { useCurrency } from '../currency.jsx';
 
 function CategoryLabel({ category, subcategory }) {
   const parts = [category];
@@ -14,6 +15,7 @@ function CategoryLabel({ category, subcategory }) {
 
 function TransactionRow({ tx }) {
   const [open, setOpen] = useState(false);
+  const { format } = useCurrency();
   const isCredit = tx.total < 0;
 
   return (
@@ -44,7 +46,7 @@ function TransactionRow({ tx }) {
                   (isCredit ? 'text-positive' : 'text-ink')
                 }
               >
-                {formatUSD(tx.total)}
+                {format(tx.total)}
               </div>
             </div>
             <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -82,7 +84,7 @@ function TransactionRow({ tx }) {
                 >
                   <span>{person}</span>
                   <span className={share < 0 ? 'text-positive' : ''}>
-                    {formatUSD(share)}
+                    {format(share)}
                   </span>
                 </li>
               ))}
