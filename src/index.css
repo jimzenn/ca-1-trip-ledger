@@ -9,9 +9,14 @@
   --color-accent: #2383E2;
   --color-positive: #0F7B6C;
   --color-negative: #B83A1A;
-  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman",
+    "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC",
+    serif;
   --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+    "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei",
+    Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
 }
 
 html,

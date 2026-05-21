@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { iconFor } from '../settle.js';
-import { useCurrency } from '../currency.jsx';
+import { iconFor, categoryLabel, subcategoryLabel, splitMethodLabel } from '../settle.js';
+import { Money } from '../currency.jsx';
 
 function CategoryLabel({ category, subcategory }) {
-  const parts = [category];
-  if (subcategory) parts.push(subcategory);
+  const parts = [categoryLabel(category)];
+  if (subcategory) parts.push(subcategoryLabel(subcategory));
   return (
     <span className="font-sans text-xs text-muted">
       <span aria-hidden="true" className="mr-1">{iconFor(category)}</span>
@@ -15,7 +15,6 @@ function CategoryLabel({ category, subcategory }) {
 
 function TransactionRow({ tx }) {
   const [open, setOpen] = useState(false);
-  const { format } = useCurrency();
   const isCredit = tx.total < 0;
 
   return (
@@ -26,7 +25,7 @@ function TransactionRow({ tx }) {
         className="w-full text-left px-4 py-4 hover:bg-neutral-50 transition-colors"
       >
         <div className="flex items-start gap-3">
-          <div className="font-sans text-xs text-muted w-10 tabular-nums shrink-0 pt-0.5">
+          <div className="font-mono text-xs text-muted w-10 tabular-nums shrink-0 pt-1">
             {tx.date}
           </div>
           <div className="flex-1 min-w-0">
@@ -40,19 +39,16 @@ function TransactionRow({ tx }) {
                   />
                 </p>
               </div>
-              <div
+              <Money
+                amount={tx.total}
                 className={
-                  'tabular-nums shrink-0 ' +
-                  (isCredit ? 'text-positive' : 'text-ink')
+                  'shrink-0 ' + (isCredit ? 'text-positive' : 'text-ink')
                 }
-              >
-                {format(tx.total)}
-              </div>
+              />
             </div>
             <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1">
               <span className="font-sans text-xs text-muted">
-                paid by{' '}
-                <span className="text-ink">{tx.payer}</span>
+                <span className="text-ink">{tx.payer}</span> 支付
               </span>
               <span className="font-sans text-xs text-muted">·</span>
               <div className="flex flex-wrap gap-1">
@@ -74,18 +70,19 @@ function TransactionRow({ tx }) {
         <div className="px-4 pb-4 -mt-1">
           <div className="ml-12 rounded-md border border-line bg-section p-3">
             <p className="font-sans text-xs text-muted mb-2">
-              Split ({tx.split.method})
+              分账（{splitMethodLabel(tx.split.method)}）
             </p>
             <ul className="space-y-1">
               {Object.entries(tx.split.shares).map(([person, share]) => (
                 <li
                   key={person}
-                  className="flex justify-between text-sm tabular-nums"
+                  className="flex justify-between text-sm"
                 >
                   <span>{person}</span>
-                  <span className={share < 0 ? 'text-positive' : ''}>
-                    {format(share)}
-                  </span>
+                  <Money
+                    amount={share}
+                    className={share < 0 ? 'text-positive' : ''}
+                  />
                 </li>
               ))}
             </ul>
@@ -94,7 +91,7 @@ function TransactionRow({ tx }) {
                 {tx.notes}
               </p>
             )}
-            <p className="mt-3 font-sans text-[10px] text-muted">id: {tx.id}</p>
+            <p className="mt-3 font-mono text-[10px] text-muted">id: {tx.id}</p>
           </div>
         </div>
       )}
@@ -106,7 +103,7 @@ export default function TransactionList({ transactions }) {
   if (transactions.length === 0) {
     return (
       <div className="rounded-md border border-line bg-section px-4 py-10 text-center">
-        <p className="text-muted">No transactions match these filters.</p>
+        <p className="text-muted">没有符合条件的账单。</p>
       </div>
     );
   }

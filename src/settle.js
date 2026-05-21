@@ -13,6 +13,35 @@ export function iconFor(category) {
   }
 }
 
+export function categoryLabel(category) {
+  switch (category) {
+    case 'transport': return '交通';
+    case 'lodging': return '住宿';
+    case 'meal': return '餐饮';
+    case 'credit': return '抵扣';
+    default: return category;
+  }
+}
+
+export function subcategoryLabel(sub) {
+  switch (sub) {
+    case 'gas-parking': return '油费 / 停车';
+    case 'rental': return '租车';
+    case 'breakfast': return '早餐';
+    case 'lunch': return '午餐';
+    case 'dinner': return '晚餐';
+    default: return sub;
+  }
+}
+
+export function splitMethodLabel(method) {
+  switch (method) {
+    case 'even': return '均分';
+    case 'custom': return '自定义';
+    default: return method;
+  }
+}
+
 export function parseDate(mdy) {
   const [m, d] = mdy.split("/").map(Number);
   return m * 100 + d;

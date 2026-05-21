@@ -8,9 +8,9 @@ import PersonDetail from './components/PersonDetail.jsx';
 import SettleSummary from './components/SettleSummary.jsx';
 
 const TABS = [
-  { id: 'all', label: 'All Transactions', emoji: '📋' },
-  { id: 'person', label: 'Per Person', emoji: '👤' },
-  { id: 'settle', label: 'Settle Up', emoji: '💸' },
+  { id: 'all', label: '全部账单', emoji: '📋' },
+  { id: 'person', label: '个人明细', emoji: '👤' },
+  { id: 'settle', label: '结算', emoji: '💸' },
 ];
 
 const CATEGORIES = ['transport', 'lodging', 'meal', 'credit'];
@@ -85,10 +85,10 @@ export default function App() {
       <header className="border-b border-line">
         <div className="mx-auto max-w-3xl px-4 py-5 sm:px-6 sm:py-6">
           <h1 className="text-2xl sm:text-3xl">
-            California Coast Trip Ledger
+            加州沿岸之旅账单
           </h1>
           <p className="mt-1 text-sm text-muted font-sans">
-            May 2026 · 6 travelers · {transactions.length} transactions
+            2026 年 5 月 · 6 位旅伴 · {transactions.length} 笔账单
           </p>
         </div>
         <nav className="mx-auto max-w-3xl px-4 sm:px-6">
@@ -148,8 +148,7 @@ export default function App() {
 
       <footer className="mx-auto max-w-3xl px-4 pb-24 sm:px-6">
         <p className="text-xs text-muted font-sans">
-          Numbers come from <code>src/data.js</code>. Source of truth for what each
-          person owes is the per-transaction <code>shares</code> map.
+          数据来源于 <code>src/data.js</code>。每笔账单的 <code>shares</code> 是分账的最终依据。
         </p>
       </footer>
 

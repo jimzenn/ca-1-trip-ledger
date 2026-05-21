@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { categoryLabel } from '../settle.js';
 
 function Chip({ active, onClick, children }) {
   return (
@@ -67,7 +68,7 @@ export default function FilterBar({
           onClick={() => setOpen((o) => !o)}
           className="flex items-center gap-2 font-sans text-sm text-ink"
         >
-          <span>Filters & sort</span>
+          <span>筛选与排序</span>
           {activeCount > 0 && (
             <span className="rounded-full bg-accent text-white text-xs px-2 py-0.5 font-sans tabular-nums">
               {activeCount}
@@ -77,16 +78,16 @@ export default function FilterBar({
         </button>
         <div className="flex items-center gap-3">
           <label className="font-sans text-xs text-muted hidden sm:inline">
-            Sort
+            排序
           </label>
           <select
             value={sort.key}
             onChange={(e) => setSort((s) => ({ ...s, key: e.target.value }))}
             className="font-sans text-sm rounded-md border border-line bg-white px-2 py-1"
           >
-            <option value="date">Date</option>
-            <option value="total">Amount</option>
-            <option value="payer">Payer</option>
+            <option value="date">日期</option>
+            <option value="total">金额</option>
+            <option value="payer">付款人</option>
           </select>
           <button
             type="button"
@@ -94,7 +95,7 @@ export default function FilterBar({
               setSort((s) => ({ ...s, dir: s.dir === 'asc' ? 'desc' : 'asc' }))
             }
             className="font-sans text-sm rounded-md border border-line bg-white px-2 py-1 hover:bg-neutral-50"
-            aria-label="Toggle sort direction"
+            aria-label="切换排序方向"
           >
             {sort.dir === 'asc' ? '↑' : '↓'}
           </button>
@@ -104,7 +105,7 @@ export default function FilterBar({
       {open && (
         <div className="border-t border-line px-4 py-4 space-y-4">
           <div>
-            <p className="font-sans text-xs text-muted mb-2">Date</p>
+            <p className="font-sans text-xs text-muted mb-2">日期</p>
             <div className="flex flex-wrap items-center gap-2">
               <select
                 value={filters.dateFrom}
@@ -113,14 +114,14 @@ export default function FilterBar({
                 }
                 className="font-sans text-sm rounded-md border border-line bg-white px-2 py-1"
               >
-                <option value="">From…</option>
+                <option value="">起始…</option>
                 {availableDates.map((d) => (
                   <option key={d} value={d}>
                     {d}
                   </option>
                 ))}
               </select>
-              <span className="text-muted text-xs font-sans">to</span>
+              <span className="text-muted text-xs font-sans">至</span>
               <select
                 value={filters.dateTo}
                 onChange={(e) =>
@@ -128,7 +129,7 @@ export default function FilterBar({
                 }
                 className="font-sans text-sm rounded-md border border-line bg-white px-2 py-1"
               >
-                <option value="">To…</option>
+                <option value="">结束…</option>
                 {availableDates.map((d) => (
                   <option key={d} value={d}>
                     {d}
@@ -140,7 +141,7 @@ export default function FilterBar({
 
           <div>
             <div className="flex items-center justify-between mb-2">
-              <p className="font-sans text-xs text-muted">Person</p>
+              <p className="font-sans text-xs text-muted">人员</p>
               <div className="flex gap-1">
                 <button
                   type="button"
@@ -154,7 +155,7 @@ export default function FilterBar({
                       : 'text-muted hover:text-ink')
                   }
                 >
-                  Involved
+                  参与
                 </button>
                 <button
                   type="button"
@@ -168,7 +169,7 @@ export default function FilterBar({
                       : 'text-muted hover:text-ink')
                   }
                 >
-                  Paid
+                  付款
                 </button>
               </div>
             </div>
@@ -186,7 +187,7 @@ export default function FilterBar({
           </div>
 
           <div>
-            <p className="font-sans text-xs text-muted mb-2">Category</p>
+            <p className="font-sans text-xs text-muted mb-2">类别</p>
             <div className="flex flex-wrap gap-2">
               {categories.map((c) => (
                 <Chip
@@ -194,7 +195,7 @@ export default function FilterBar({
                   active={filters.categories.includes(c)}
                   onClick={() => toggleCategory(c)}
                 >
-                  {c}
+                  {categoryLabel(c)}
                 </Chip>
               ))}
             </div>
@@ -206,7 +207,7 @@ export default function FilterBar({
               onClick={reset}
               className="font-sans text-xs text-muted hover:text-ink underline underline-offset-2"
             >
-              Reset all
+              重置
             </button>
           </div>
         </div>

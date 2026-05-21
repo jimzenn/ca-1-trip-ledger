@@ -37,11 +37,18 @@ export function useCurrency() {
   return ctx;
 }
 
+export function Money({ amount, className = '' }) {
+  const { format } = useCurrency();
+  return (
+    <span className={'font-mono tabular-nums ' + className}>{format(amount)}</span>
+  );
+}
+
 export function CurrencyToggle() {
   const { currency, setCurrency } = useCurrency();
   const opts = [
-    { id: 'USD', label: '$ USD' },
-    { id: 'CNY', label: '¥ CNY' },
+    { id: 'USD', label: '$ 美元' },
+    { id: 'CNY', label: '¥ 人民币' },
   ];
   return (
     <div className="fixed bottom-4 right-4 z-50">
@@ -68,7 +75,7 @@ export function CurrencyToggle() {
       </div>
       {currency === 'CNY' && (
         <p className="mt-1 text-[10px] text-muted text-right font-sans pr-1">
-          1 USD = ¥{USD_TO_CNY.toFixed(4)} · {RATE_AS_OF}
+          1 美元 = <span className="font-mono">¥{USD_TO_CNY.toFixed(4)}</span> · {RATE_AS_OF}
         </p>
       )}
     </div>

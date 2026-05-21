@@ -1,9 +1,8 @@
 import { useMemo } from 'react';
 import { computeTotals, simplifyDebts } from '../settle.js';
-import { useCurrency } from '../currency.jsx';
+import { Money } from '../currency.jsx';
 
 export default function SettleSummary({ participants, transactions }) {
-  const { format } = useCurrency();
   const { paid, owed, net, transfers } = useMemo(() => {
     const { paid, owed, net } = computeTotals(transactions, participants);
     const transfers = simplifyDebts(net);
@@ -15,15 +14,15 @@ export default function SettleSummary({ participants, transactions }) {
   return (
     <section className="space-y-8">
       <div>
-        <h2 className="font-sans text-sm text-muted mb-2 px-1">Balances</h2>
+        <h2 className="font-sans text-sm text-muted mb-2 px-1">余额</h2>
         <div className="rounded-md border border-line bg-white overflow-hidden">
           <table className="w-full text-sm">
             <thead className="font-sans text-xs text-muted bg-section">
               <tr>
-                <th className="text-left px-4 py-2 font-normal">Person</th>
-                <th className="text-right px-4 py-2 font-normal">💰 Paid</th>
-                <th className="text-right px-4 py-2 font-normal">📥 Owed</th>
-                <th className="text-right px-4 py-2 font-normal">⚖️ Net</th>
+                <th className="text-left px-4 py-2 font-normal">人员</th>
+                <th className="text-right px-4 py-2 font-normal">💰 已付</th>
+                <th className="text-right px-4 py-2 font-normal">📥 应付</th>
+                <th className="text-right px-4 py-2 font-normal">⚖️ 净额</th>
               </tr>
             </thead>
             <tbody>
@@ -38,16 +37,14 @@ export default function SettleSummary({ participants, transactions }) {
                 return (
                   <tr key={p} className="border-t border-line">
                     <td className="px-4 py-3">{p}</td>
-                    <td className="px-4 py-3 text-right tabular-nums">
-                      {format(paid[p])}
+                    <td className="px-4 py-3 text-right">
+                      <Money amount={paid[p]} />
                     </td>
-                    <td className="px-4 py-3 text-right tabular-nums">
-                      {format(owed[p])}
+                    <td className="px-4 py-3 text-right">
+                      <Money amount={owed[p]} />
                     </td>
-                    <td
-                      className={'px-4 py-3 text-right tabular-nums ' + tone}
-                    >
-                      {format(n)}
+                    <td className="px-4 py-3 text-right">
+                      <Money amount={n} className={tone} />
                     </td>
                   </tr>
                 );
@@ -56,17 +53,15 @@ export default function SettleSummary({ participants, transactions }) {
           </table>
         </div>
         <p className="mt-2 font-sans text-xs text-muted px-1">
-          Positive Net = group owes them. Negative Net = they owe the group.
+          净额为正：大家欠他/她。净额为负：他/她欠大家。
         </p>
       </div>
 
       <div>
-        <h2 className="font-sans text-sm text-muted mb-2 px-1">
-          Suggested Transfers
-        </h2>
+        <h2 className="font-sans text-sm text-muted mb-2 px-1">建议转账</h2>
         {transfers.length === 0 ? (
           <div className="rounded-md border border-line bg-section px-4 py-8 text-center text-muted">
-            All settled — nothing to transfer.
+            已结清，无需转账。
           </div>
         ) : (
           <ul className="rounded-md border border-line bg-white divide-y divide-line">
@@ -80,13 +75,13 @@ export default function SettleSummary({ participants, transactions }) {
                   <span className="text-muted" aria-hidden="true">💸</span>
                   <span className="text-positive">{t.to}</span>
                 </div>
-                <span className="tabular-nums">{format(t.amount)}</span>
+                <Money amount={t.amount} />
               </li>
             ))}
           </ul>
         )}
         <p className="mt-2 font-sans text-xs text-muted px-1">
-          Greedy debt simplification — minimum transfers to settle the trip.
+          贪心算法简化债务 — 最少转账次数即可结清。
         </p>
       </div>
     </section>
