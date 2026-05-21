@@ -137,16 +137,17 @@ export const transactions = [
   {
     id: "B-COUPON",
     date: "5/14",
+    dateRange: ["5/14", "5/16"],
     category: "credit",
     venue: "Airbnb $259 Coupon",
     total: -259.00,
     payer: "jim",
-    participants: ["jim", "zxc", "yuki", "pp"],
+    participants: ["jim", "zxc", "yuki", "pp", "ZC"],
     split: {
-      method: "even",
-      shares: { jim: -64.75, zxc: -64.75, yuki: -64.75, pp: -64.75 }
+      method: "custom",
+      shares: { jim: -64.75, zxc: -21.58, yuki: -64.75, pp: -64.75, ZC: -43.17 }
     },
-    notes: "LA Airbnb full refund + $259 store coupon. jim holds it as cash; original 4-person group splits."
+    notes: "LA Airbnb 全额退款 + $259 抵扣券，jim 以现金形式持有。按 Ayres 三晚的人·夜分摊（$259 / 12 = $21.58／人·夜）：jim/pp/yuki 各 3 晚，ZC 2 晚，zxc 1 晚。"
   },
   {
     id: "C8",
