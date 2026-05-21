@@ -19,9 +19,9 @@ export default function SettleSummary({ participants, transactions }) {
             <thead className="font-sans text-xs text-muted bg-section">
               <tr>
                 <th className="text-left px-4 py-2 font-normal">Person</th>
-                <th className="text-right px-4 py-2 font-normal">Paid</th>
-                <th className="text-right px-4 py-2 font-normal">Owed</th>
-                <th className="text-right px-4 py-2 font-normal">Net</th>
+                <th className="text-right px-4 py-2 font-normal">💰 Paid</th>
+                <th className="text-right px-4 py-2 font-normal">📥 Owed</th>
+                <th className="text-right px-4 py-2 font-normal">⚖️ Net</th>
               </tr>
             </thead>
             <tbody>
@@ -75,7 +75,7 @@ export default function SettleSummary({ participants, transactions }) {
               >
                 <div className="flex items-center gap-3 min-w-0">
                   <span className="text-negative">{t.from}</span>
-                  <span className="text-muted">→</span>
+                  <span className="text-muted" aria-hidden="true">💸</span>
                   <span className="text-positive">{t.to}</span>
                 </div>
                 <span className="tabular-nums">{formatUSD(t.amount)}</span>

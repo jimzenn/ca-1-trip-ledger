@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { formatUSD, parseDate } from '../settle.js';
+import { formatUSD, parseDate, iconFor } from '../settle.js';
 
 function SummaryCard({ label, value, tone }) {
   const toneClass =
@@ -62,9 +62,9 @@ export default function PersonDetail({ participants, transactions }) {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        <SummaryCard label="Paid" value={formatUSD(paid)} />
-        <SummaryCard label="Owed" value={formatUSD(owed)} />
-        <SummaryCard label="Net" value={formatUSD(net)} tone={netTone} />
+        <SummaryCard label="💰 Paid" value={formatUSD(paid)} />
+        <SummaryCard label="📥 Owed" value={formatUSD(owed)} />
+        <SummaryCard label="⚖️ Net" value={formatUSD(net)} tone={netTone} />
       </div>
       <p className="font-sans text-xs text-muted -mt-2">{netHint}</p>
 
@@ -93,7 +93,12 @@ export default function PersonDetail({ participants, transactions }) {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-baseline justify-between gap-3">
-                        <p className="truncate">{tx.venue}</p>
+                        <p className="truncate">
+                          <span aria-hidden="true" className="mr-1.5">
+                            {iconFor(tx.category)}
+                          </span>
+                          {tx.venue}
+                        </p>
                         <div className="text-right tabular-nums shrink-0">
                           {hasShare ? (
                             <span

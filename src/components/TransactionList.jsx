@@ -1,11 +1,14 @@
 import { useState } from 'react';
-import { formatUSD } from '../settle.js';
+import { formatUSD, iconFor } from '../settle.js';
 
 function CategoryLabel({ category, subcategory }) {
   const parts = [category];
   if (subcategory) parts.push(subcategory);
   return (
-    <span className="font-sans text-xs text-muted">{parts.join(' · ')}</span>
+    <span className="font-sans text-xs text-muted">
+      <span aria-hidden="true" className="mr-1">{iconFor(category)}</span>
+      {parts.join(' · ')}
+    </span>
   );
 }
 

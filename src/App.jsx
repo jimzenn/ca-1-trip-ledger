@@ -7,9 +7,9 @@ import PersonDetail from './components/PersonDetail.jsx';
 import SettleSummary from './components/SettleSummary.jsx';
 
 const TABS = [
-  { id: 'all', label: 'All Transactions' },
-  { id: 'person', label: 'Per Person' },
-  { id: 'settle', label: 'Settle Up' },
+  { id: 'all', label: 'All Transactions', emoji: '📋' },
+  { id: 'person', label: 'Per Person', emoji: '👤' },
+  { id: 'settle', label: 'Settle Up', emoji: '💸' },
 ];
 
 const CATEGORIES = ['transport', 'lodging', 'meal', 'credit'];
@@ -104,6 +104,7 @@ export default function App() {
                       : 'border-transparent text-muted hover:text-ink')
                   }
                 >
+                  <span aria-hidden="true" className="mr-1">{t.emoji}</span>
                   {t.label}
                 </button>
               );

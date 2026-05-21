@@ -1,3 +1,18 @@
+export function iconFor(category) {
+  switch (category) {
+    case 'transport':
+      return '🚗';
+    case 'lodging':
+      return '🏨';
+    case 'meal':
+      return '🍽️';
+    case 'credit':
+      return '🎟️';
+    default:
+      return '•';
+  }
+}
+
 export function formatUSD(amount) {
   const abs = Math.abs(amount);
   const sign = amount < 0 ? "-" : "";
